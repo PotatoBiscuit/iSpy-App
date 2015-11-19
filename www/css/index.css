@@ -113,3 +113,14 @@ h1 {
     animation:fade 3000ms infinite;
     -webkit-animation:fade 3000ms infinite;
 }
+
+.button_container {
+	width: 100vw;
+	height: 75vh;
+	text-align: center;
+}
+button {
+	width: 75%;
+	height: 25%;
+	margin-bottom: 5px;
+}
