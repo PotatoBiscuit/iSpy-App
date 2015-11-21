@@ -44,16 +44,75 @@
 			function ViewEvent(){
 				window.location.href = "ViewEvent.html";}
 		</script>
+		<script type="text/javascript" charset="utf-8">
+
+			// Wait for Cordova to load
+			//
+			document.addEventListener("deviceready", onDeviceReady, false);
+
+			// Cordova is ready
+			//
+			function onDeviceReady() {
+				var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
+				db.transaction(queryDB, errorCB);
+			}
+			
+			function queryDB(tx) {
+				tx.executeSql('SELECT * FROM DEMO', [], querySuccess, errorCB);
+			}
+			
+			function querySuccess(tx, results) {
+				// this will be true since it was a select statement and so rowsAffected was 0
+				var len = results.rows.length;
+				
+				if(len == 0){
+					alert("Repopulating the database");
+					db.transaction(populateDB, errorCB, successCB);
+				}
+				else{
+					alert("Pre-existing database");}
+				
+				if (!results.rowsAffected) {
+					console.log('No rows affected!');
+					return false;
+				}
+			}
+
+			// Populate the database 
+			//
+			function populateDB(tx) {
+				 tx.executeSql('DROP TABLE IF EXISTS DEMO');
+				 tx.executeSql('CREATE TABLE IF NOT EXISTS DEMO (id unique, number, data)');
+				 tx.executeSql('INSERT INTO DEMO (id, number, data) VALUES (1, 3, "Camera")');
+				 tx.executeSql('INSERT INTO DEMO (id, number, data) VALUES (2, 4, "Camera")');
+				 tx.executeSql('INSERT INTO DEMO (id, number, data) VALUES (3, 1, "Event")');
+				 tx.executeSql('INSERT INTO DEMO (id, number, data) VALUES (4, 2, "Event")');
+				 tx.executeSql('INSERT INTO DEMO (id, number, data) VALUES (5, 5, "Camera")');
+			}
+			
+			
+
+			// Transaction error callback
+			//
+			function errorCB(tx, err) {
+				alert("Error processing SQL: "+err);
+			}
+
+			// Transaction success callback
+			//
+			function successCB() {
+				alert("Database creation successful")
+			}
+
+		</script>
     </head>
     <body>
-		
-        <div class="app">
-            <h1>Logo</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
-            </div>
-        </div>
+		<div class="header_container">
+			Title Page
+		</div>
+		<div class="title_container">
+			iSpy
+		</div>
 		
 		<div class="button_container">
 			<button type="button" onclick="AddCamera()">Add/Delete Cameras</button>
