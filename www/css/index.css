@@ -188,6 +188,34 @@ h1 {
 	left:0;
 }
 
+.view_holder {
+	position: fixed;
+	overflow-y: scroll;
+	height: 89vh;
+	width: 100vw;
+	top:11vh;
+	left:0;
+}
+
+.title_view{
+	width: 100vw;
+	height: 15vw;
+	background-image:linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
+    background-image:-webkit-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
+    background-image:-ms-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
+    background-image:-webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0, #A7A7A7),
+        color-stop(0.51, #E4E4E4)
+    );
+}
+.content_camera_view{
+	width: 100vw;
+	height: 65vw;
+}
+
 button {
 	width: 75%;
 	height: 10vh;
