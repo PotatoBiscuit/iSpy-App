@@ -37,3 +37,7 @@ function querySuccess(tx, results) {
 function errorCB(tx, err) {
 	alert("Error processing SQL: "+err);
 }
+
+
+
+var retrieve = "DELETE FROM DEMO WHERE id=" + ID;
