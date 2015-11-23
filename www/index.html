@@ -58,13 +58,14 @@
 			}
 			
 			function queryDB(tx) {
+				tx.executeSql('CREATE TABLE IF NOT EXISTS DEMO (id unique, number, data, src)');
 				tx.executeSql('SELECT * FROM DEMO', [], querySuccess, errorCB);
 			}
 			
 			function querySuccess(tx, results) {
 				// this will be true since it was a select statement and so rowsAffected was 0
 				var len = results.rows.length;
-				
+				alert(len);
 				if(len == 0){
 					alert("Repopulating the database");
 					var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
