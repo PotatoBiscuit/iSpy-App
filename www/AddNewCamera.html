@@ -35,6 +35,45 @@
 		
         <link rel="stylesheet" type="text/css" href="css/index.css">
 		
+		<script>
+		document.addEventListener("deviceready", onDeviceReady, false);
+
+		// Cordova is ready
+		//
+		function onDeviceReady() {
+			db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
+		}
+		
+		function addCamera1(){
+			var source = document.forms["AddNewCamera"]["source"].value;
+			var number = document.forms["AddNewCamera"]["number"].value;
+			if(source == null || source == "" || number == null || number == ""){
+				alert("Finish the form ya doofas");
+				return false;
+			}
+			db.transaction(queryDB, errorCB);
+			return false;
+		}
+
+		function queryDB(tx) {
+			var message = "SELECT id FROM DEMO ORDER BY id DESC LIMIT 1";
+			tx.executeSql(message, [], querySuccess, errorCB);
+		}
+
+		function querySuccess(tx, results){
+			var ID = results.rows.item(0).id;
+			ID = ID + 1;
+			number = document.forms["AddNewCamera"]["number"].value;
+			source = document.forms["AddNewCamera"]["source"].value;
+			var command = "INSERT INTO DEMO (id, number, data, src) VALUES (" + ID + "," + number + ", 'Camera','" + source + "')";
+			tx.executeSql(command);
+			window.location="AddCamera.html";
+		}
+
+		function errorCB(tx, err) {
+			alert("Error processing SQL: "+err);
+		}
+		</script>
 			
         <title>Hello World</title>
     </head>
@@ -45,8 +84,8 @@
 		</div>
 		<div class="camera_event_holder">
 		
-		<script type="text/javascript" src="js/AddCamera.js"></script>
-		<form name="AddNewCamera" onsubmit="return addCamera()" method="post">
+
+		<form name="AddNewCamera" onsubmit="return addCamera1()" method="post">
 		Src: <input type="text" name="source"><br>
 		Number: <input type="text" name="number"><br>
 		<input type="submit" value="Submit">

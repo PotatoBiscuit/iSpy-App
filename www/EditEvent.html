@@ -33,71 +33,67 @@
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
 		
-        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
 		
 		<script>
-		document.addEventListener("deviceready", onDeviceReady, false);
+			var ID=localStorage["id"];
+			var db;
+			alert(ID);
+			document.addEventListener("deviceready", onDeviceReady2, false);
 
-		// Cordova is ready
-		//
-		function onDeviceReady() {
-			db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
-		}
-		
-		function addEvent(){
-			var source = document.forms["AddNewEvent"]["source"].value;
-			var number = document.forms["AddNewEvent"]["number"].value;
-			if(source == null || source == "" || number == null || number == ""){
-				alert("Finish the form ya doofas");
-				return false;
+			// Cordova is ready
+			//
+			function onDeviceReady2() {
+				db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
+				db.transaction(queryDB2, errorCB2);
 			}
-			db.transaction(queryDB, errorCB);
-			return false;
-		}
-
-		function queryDB(tx) {
-			var message = "SELECT id FROM DEMO ORDER BY id DESC LIMIT 1";
-			tx.executeSql(message, [], querySuccess, errorCB);
-		}
-
-		function querySuccess(tx, results){
-			var ID = results.rows.item(0).id;
-			ID = ID + 1;
-			number = document.forms["AddNewEvent"]["number"].value;
-			source = document.forms["AddNewEvent"]["source"].value;
-			var command = "INSERT INTO DEMO (id, number, data, src) VALUES (" + ID + "," + number + ", 'Event','" + source + "')";
-			tx.executeSql(command);
-			window.location="AddEvent.html";
-		}
-
-		function errorCB(tx, err) {
-			alert("Error processing SQL: "+err);
-		}
-		</script>
 			
-        <title>Hello World</title>
+			function queryDB2(tx1) {
+				var message="SELECT * FROM DEMO WHERE id=" + ID;
+				tx1.executeSql(message, [], querySuccess2, errorCB2);
+			}
+
+			function querySuccess2(tx1, results) {
+				// this will be true since it was a select statement and so rowsAffected was 0
+				var len = results.rows.length;
+				for (var i=0; i<len; i++){
+					var input1 = document.getElementById("src");
+					input1.value = results.rows.item(i).src;
+					var input2 = document.getElementById("number");
+					input2.value = results.rows.item(i).number;
+				}
+			}
+
+			// Transaction error callback
+			//
+			function errorCB2(tx1, err) {
+				alert("Error processing SQL: "+err);
+			}
+		</script>
+		
+		<title>Hello World</title>
     </head>
     <body>
 
         <div class="header_container">
-			Add Event
+			Edit Events
 		</div>
 		<div class="camera_event_holder">
 		
-		
-		<script type="text/javascript" src="js/index.js"></script>
-		<script type="text/javascript" src="cordova.js"></script>
-		<form name="AddNewEvent" onsubmit="return addEvent()" method="post">
-		Src: <input type="text" name="source"><br>
-		Number: <input type="text" name="number"><br>
-		<input type="submit" value="Submit">
+		<script type="text/javascript" src="js/EditEvent.js"></script>
+		<form name="EditEvent" onsubmit="return EditEvent1()" method="post">
+		Src: <input id="src" type="text" name="src"><br>
+		Number: <input id="number" type="text" name="number"><br>
+		<input type="submit" value="Change">
 		</form>
+		
+		
 		</div>
 		
 		<div class="arrow"><a href = "AddEvent.html"><</a></div>
 		
-
-        
+		<script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
 		
     </body>
 </html>

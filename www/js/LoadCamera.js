@@ -21,7 +21,7 @@ function querySuccess(tx, results) {
 	for (var i=0; i<len; i++){
 		var list = document.createElement("LI");
 		list.className = "ul_element";
-		list.innerHTML = "<label for='mylist-node" + results.rows.item(i).number + "'><div class = 'ul_container1'>" + results.rows.item(i).data + " " + results.rows.item(i).number + "</div><div class = 'ul_container2'><p style='color:green; margin-top:7vh;'>Active</p></div></label><input type='checkbox' id='mylist-node" + results.rows.item(i).number + "' /><ul><li class = 'li_editor'><button class = 'button_edit_del' type='button' onclick='AddCamera()'>Edit</button><button class = 'button_edit_del' type='button' onclick='DeleteCameras(" + results.rows.item(i).id + ")'>Delete</button></li></ul>";
+		list.innerHTML = "<label for='mylist-node" + results.rows.item(i).number + "'><div class = 'ul_container1'>" + results.rows.item(i).data + " " + results.rows.item(i).number + "</div><div class = 'ul_container2'><p style='color:green; margin-top:7vh;'>Active</p></div></label><input type='checkbox' id='mylist-node" + results.rows.item(i).number + "' /><ul><li class = 'li_editor'><button class = 'button_edit_del' type='button' onclick='EditCameras(" + results.rows.item(i).id + ")'>Edit</button><button class = 'button_edit_del' type='button' onclick='DeleteCameras(" + results.rows.item(i).id + ")'>Delete</button></li></ul>";
 		var holder = document.getElementById("collapsibleList");
 		holder.appendChild(list);
 	}

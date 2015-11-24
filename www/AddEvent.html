@@ -33,6 +33,43 @@
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
         <link rel="stylesheet" type="text/css" href="css/index.css">
+		
+		<script type="text/javascript">
+
+			// Cordova is ready
+			//
+			function EditEvents(id){
+				localStorage["id"] = id;
+				window.location.href="EditEvent.html";
+			}
+			function DeleteEvents(id){
+				ID = id;
+				onDeviceReady1();
+			}
+			function onDeviceReady1() {
+				var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
+				db.transaction(queryDB1, errorCB1);
+			}
+
+
+			function queryDB1(tx) {
+				var retrieve = "DELETE FROM DEMO WHERE id=" + ID;
+				tx.executeSql(retrieve, [], querySuccess1, errorCB1);
+			}
+
+			function querySuccess1(tx, results) {
+				// this will be true since it was a select statement and so rowsAffected was 0
+				alert("Event Deleted!");
+				location.reload();
+			}
+
+			// Transaction error callback
+			//
+			function errorCB1(tx, err) {
+				alert("Error processing SQL: "+err);
+			}
+		</script>
+		
         <title>Hello World</title>
     </head>
     <body>
@@ -52,7 +89,7 @@
 		
 		<div class="footer_container"></div>
 		<div class="arrow"><a href = "index.html"><</a></div>
-		<div class="plus">+</div>
+		<div class="plus"><a href="AddNewEvent.html">+</a></div>
 		
 		<script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>

@@ -39,6 +39,10 @@
 
 			// Cordova is ready
 			//
+			function EditCameras(id){
+				localStorage["id"] = id;
+				window.location.href="EditCamera.html";
+			}
 			function DeleteCameras(id){
 				ID = id;
 				onDeviceReady1();
