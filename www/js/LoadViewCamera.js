@@ -28,7 +28,17 @@ function querySuccess(tx, results) {
 		
 		title = document.createElement("div");
 		title.className = "content_camera_view";
-		title.innerHTML = "<img src = 'img/download.jpg' style='width: 100vw; height: 65vw;'>";
+
+		if (i % 4 == 0) {
+			title.innerHTML = "<img src='img/backyard.jpg' style='width: 100vw; height: 65vw;'>";
+		} else if (i % 4 == 1) {
+			title.innerHTML = "<img src='img/front.jpg' style='width: 100vw; height: 65vw;'>";
+		} else if (i % 4 == 2) {
+			title.innerHTML = "<img src='img/garage.jpg' style='width: 100vw; height: 65vw;'>";
+		} else {
+			title.innerHTML = "<img src='img/hallway.jpg' style='width: 100vw; height: 65vw;'>";
+		}
+
 		holder.appendChild(title);
 		
 	}
